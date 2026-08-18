@@ -1,0 +1,44 @@
+# Ignore all bin and obj folders
+bin/
+obj/
+
+# Ignore Visual Studio specific files
+.vs/
+.vscode/
+*.user
+*.userprefs
+*.sln.iml
+.idea/
+
+# Ignore appsettings files (usually contain sensitive data)
+appsettings*.json
+!appsettings.json.example
+
+# Ignore NuGet packages
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# Ignore build results
+*.dll
+*.exe
+*.pdb
+
+# Ignore dependency folders
+node_modules/
+dist/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE cache
+.idea/
+*.suo
+*.sln.iml
+
+# Local environment files
+.env
+.env.local
+*.log
