@@ -1,0 +1,172 @@
+.project-editor {
+  max-width: 700px;
+}
+
+.back-btn {
+  border: none;
+  background: none;
+  color: #2e5aac;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  margin-bottom: 1.25rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+}
+
+.hint {
+  font-weight: 400;
+  color: #999;
+  font-size: 0.78rem;
+}
+
+input,
+textarea {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.tech-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.tech-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  background: white;
+}
+
+.tech-chip.selected {
+  background: #eaf0fb;
+  border-color: #2e5aac;
+  color: #2e5aac;
+  font-weight: 600;
+}
+
+.tech-chip img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.form-error {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 0.6rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+form button[type='submit'] {
+  margin-top: 1.25rem;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 8px;
+  background: #2e5aac;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+form button[type='submit']:disabled {
+  opacity: 0.6;
+}
+
+.images-section {
+  margin-top: 1.5rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.upload-btn {
+  display: inline-block;
+  padding: 0.55rem 1rem;
+  background: #eaf0fb;
+  color: #2e5aac;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+}
+
+.image-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.image-item img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  display: block;
+}
+
+.image-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.image-actions button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: white;
+  padding: 0.3rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.image-actions button.delete {
+  color: #ff8a80;
+}
+
+.image-actions button:disabled {
+  opacity: 0.3;
+}
+
+.save-first-hint {
+  margin-top: 1rem;
+}

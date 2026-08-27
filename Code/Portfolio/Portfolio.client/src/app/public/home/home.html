@@ -1,0 +1,124 @@
+@if (isLoading()) {
+  <div class="loading-page">Loading...</div>
+} @else if (notFound()) {
+  <div class="not-found-page">
+    <h1>Portfolio not found</h1>
+    <p>This page doesn't exist.</p>
+  </div>
+} @else {
+  <div class="public-site">
+    <!-- Hero -->
+    <header class="hero">
+      @if (profile()?.profileImageUrl) {
+        <img [src]="profile()!.profileImageUrl" [alt]="profile()!.fullName" class="hero-photo" />
+      }
+      <h1>{{ profile()?.fullName }}</h1>
+      @if (profile()?.bio) {
+        <p class="bio">{{ profile()!.bio }}</p>
+      }
+
+      <div class="contact-row">
+        @if (profile()?.phoneNumber) {
+          <a [href]="'tel:' + profile()!.phoneNumber">📞 {{ profile()!.phoneNumber }}</a>
+        }
+        @if (profile()?.githubUrl) {
+          <a [href]="profile()!.githubUrl" target="_blank">GitHub</a>
+        }
+        @if (profile()?.linkedInUrl) {
+          <a [href]="profile()!.linkedInUrl" target="_blank">LinkedIn</a>
+        }
+        @if (resumeDownloadUrl) {
+          <a [href]="resumeDownloadUrl" class="resume-btn">Download Resume</a>
+        }
+        <a [routerLink]="['/u', profile()!.slug, 'contact']" class="contact-link">Contact Me →</a>
+      </div>
+    </header>
+
+    <!-- Technologies -->
+    @if (technologies().length > 0) {
+      <section class="section">
+        <h2>Skills</h2>
+        <div class="tech-grid">
+          @for (tech of technologies(); track tech.id) {
+            <div class="tech-badge">
+              @if (tech.iconUrl) {
+                <img [src]="tech.iconUrl" [alt]="tech.name" />
+              }
+              <span>{{ tech.name }}</span>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Work Experience -->
+    @if (experience().length > 0) {
+      <section class="section">
+        <h2>Work Experience</h2>
+        <div class="timeline">
+          @for (exp of experience(); track exp.id) {
+            <div class="timeline-item">
+              <h3>{{ exp.role }} — {{ exp.company }}</h3>
+              <p class="timeline-dates">
+                {{ exp.startDate | slice: 0:10 }} — {{ exp.endDate ? (exp.endDate | slice: 0:10) : 'Present' }}
+              </p>
+              @if (exp.description) {
+                <p>{{ exp.description }}</p>
+              }
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Education -->
+    @if (education().length > 0) {
+      <section class="section">
+        <h2>Education</h2>
+        <div class="timeline">
+          @for (edu of education(); track edu.id) {
+            <div class="timeline-item">
+              <h3>{{ edu.institution }}</h3>
+              <p class="timeline-subtitle">
+                {{ edu.degree }}{{ edu.fieldOfStudy ? ' in ' + edu.fieldOfStudy : '' }}
+              </p>
+              <p class="timeline-dates">
+                {{ edu.startDate | slice: 0:10 }} — {{ edu.endDate ? (edu.endDate | slice: 0:10) : 'Present' }}
+              </p>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Projects -->
+    @if (projects().length > 0) {
+      <section class="section">
+        <h2>Projects</h2>
+        <div class="project-grid">
+          @for (project of projects(); track project.id) {
+            <div class="project-card" (click)="goToProject(project.id)">
+              @if (project.images.length > 0) {
+                <img [src]="project.images[0].imageUrl" [alt]="project.title" class="project-thumb" />
+              }
+              <div class="project-card-body">
+                <h3>{{ project.title }}</h3>
+                @if (project.projectDate) {
+                  <p class="project-date">{{ project.projectDate | slice: 0:10 }}</p>
+                }
+                @if (project.shortDescription) {
+                  <p class="project-short-desc">{{ project.shortDescription }}</p>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Footer -->
+    <footer class="footer">
+      <a [routerLink]="['/u', profile()!.slug, 'contact']">Get in touch →</a>
+    </footer>
+  </div>
+}

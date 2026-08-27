@@ -1,0 +1,20 @@
+<div class="dashboard">
+  <aside class="sidebar">
+    <div class="brand">{{ fullName }}</div>
+
+    <nav>
+      <a routerLink="profile" routerLinkActive="active">Profile</a>
+      <a routerLink="projects" routerLinkActive="active">Projects</a>
+      <a routerLink="education" routerLinkActive="active">Education</a>
+      <a routerLink="experience" routerLinkActive="active">Experience</a>
+      <a routerLink="technologies" routerLinkActive="active">Technologies</a>
+    </nav>
+
+    <a class="view-site" [href]="'/u/' + slug" target="_blank">View my public site ↗</a>
+    <button class="logout" (click)="logout()">Log Out</button>
+  </aside>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>

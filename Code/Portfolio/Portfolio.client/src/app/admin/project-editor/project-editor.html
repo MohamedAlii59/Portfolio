@@ -1,0 +1,82 @@
+<div class="project-editor">
+  <button class="back-btn" (click)="goBack()">← Back to Projects</button>
+
+  @if (isLoading()) {
+    <p>Loading...</p>
+  } @else {
+    <h1>{{ projectId() ? 'Edit Project' : 'New Project' }}</h1>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <label>Title</label>
+      <input formControlName="title" />
+
+      <label>Short Description <span class="hint">(shown on the project card)</span></label>
+      <input formControlName="shortDescription" />
+
+      <label>Full Description</label>
+      <textarea formControlName="description" rows="5"></textarea>
+
+      <label>Project Date</label>
+      <input type="date" formControlName="projectDate" />
+
+      <label>Demo Video Link <span class="hint">(YouTube / Vimeo)</span></label>
+      <input formControlName="demoVideoUrl" placeholder="https://youtube.com/watch?v=..." />
+
+      <label>GitHub Repository Link</label>
+      <input formControlName="githubUrl" placeholder="https://github.com/..." />
+
+      <label>Live Project Link</label>
+      <input formControlName="projectUrl" placeholder="https://..." />
+
+      <label>Technologies Used</label>
+      <div class="tech-picker">
+        @for (tech of allTechnologies(); track tech.id) {
+          <div class="tech-chip" [class.selected]="isTechSelected(tech.id)" (click)="toggleTech(tech.id)">
+            @if (tech.iconUrl) {
+              <img [src]="tech.iconUrl" [alt]="tech.name" />
+            }
+            <span>{{ tech.name }}</span>
+          </div>
+        }
+      </div>
+
+      @if (saveError()) {
+        <div class="form-error">{{ saveError() }}</div>
+      }
+
+      <button type="submit" [disabled]="isSaving()">
+        {{ isSaving() ? 'Saving...' : (projectId() ? 'Save Changes' : 'Create Project') }}
+      </button>
+    </form>
+
+    @if (projectId()) {
+      <section class="images-section">
+        <h2>Project Images</h2>
+
+        <label class="upload-btn">
+          {{ isUploadingImages() ? 'Uploading...' : '+ Add Images' }}
+          <input type="file" accept="image/*" multiple (change)="onImagesSelected($event)" hidden />
+        </label>
+
+        @if (images().length > 0) {
+          <div class="image-grid">
+            @for (image of images(); track image.id; let i = $index) {
+              <div class="image-item">
+                <img [src]="image.imageUrl" alt="Project image" />
+                <div class="image-actions">
+                  <button (click)="moveImageLeft(i)" [disabled]="i === 0">←</button>
+                  <button (click)="moveImageRight(i)" [disabled]="i === images().length - 1">→</button>
+                  <button class="delete" (click)="onDeleteImage(image.id)">×</button>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <p class="hint">No images yet.</p>
+        }
+      </section>
+    } @else {
+      <p class="hint save-first-hint">Save the project first to start uploading images.</p>
+    }
+  }
+</div>

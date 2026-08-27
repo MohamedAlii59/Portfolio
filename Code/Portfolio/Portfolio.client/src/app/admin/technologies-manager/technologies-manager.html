@@ -1,0 +1,47 @@
+<p>technologies-manager works!</p>
+<div class="technologies-manager">
+  <div class="header-row">
+    <h1>Technologies</h1>
+    <button class="add-btn" (click)="showAddForm.set(!showAddForm())">
+      {{ showAddForm() ? 'Cancel' : '+ Add Technology' }}
+    </button>
+  </div>
+
+  @if (showAddForm()) {
+    <form class="add-form" [formGroup]="form" (ngSubmit)="onCreate()">
+      <label>Technology Name</label>
+      <input formControlName="name" placeholder="e.g. Angular" />
+
+      <label class="icon-upload-label">
+        {{ selectedIconName() ?? 'Choose Icon (optional)' }}
+        <input type="file" accept="image/*" (change)="onIconSelected($event)" hidden />
+      </label>
+
+      @if (createError()) {
+        <div class="form-error">{{ createError() }}</div>
+      }
+
+      <button type="submit" [disabled]="isCreating()">
+        {{ isCreating() ? 'Creating...' : 'Create' }}
+      </button>
+    </form>
+  }
+
+  @if (isLoading()) {
+    <p>Loading...</p>
+  } @else {
+    <p class="hint">Click a technology to add or remove it from your profile.</p>
+
+    <div class="tech-grid">
+      @for (tech of allTechnologies(); track tech.id) {
+        <div class="tech-chip" [class.selected]="isOnProfile(tech.id)" (click)="toggleTechnology(tech)">
+          @if (tech.iconUrl) {
+            <img [src]="tech.iconUrl" [alt]="tech.name" />
+          }
+          <span>{{ tech.name }}</span>
+          <button class="delete-icon" (click)="onDelete(tech); $event.stopPropagation()">×</button>
+        </div>
+      }
+    </div>
+  }
+</div>

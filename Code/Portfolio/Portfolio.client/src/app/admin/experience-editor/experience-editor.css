@@ -1,0 +1,155 @@
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.add-btn {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #2e5aac;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.empty-state {
+  color: #888;
+}
+
+.entry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.entry-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: white;
+  padding: 1.25rem;
+  border-radius: 12px;
+}
+
+.entry-content h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+}
+
+.entry-dates {
+  margin: 0 0 0.5rem;
+  color: #999;
+  font-size: 0.8rem;
+}
+
+.entry-description {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.entry-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.icon-btn {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.icon-btn.delete {
+  color: #b3261e;
+  border-color: #f0c4c0;
+}
+
+.icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-form {
+  background: white;
+  padding: 1.75rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.modal-form h2 {
+  margin: 0 0 0.5rem;
+}
+
+.modal-form label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.6rem;
+}
+
+.modal-form input,
+.modal-form textarea {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.checkbox-label input {
+  width: auto;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+.cancel-btn {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.modal-actions button[type='submit'] {
+  padding: 0.6rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  background: #2e5aac;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}

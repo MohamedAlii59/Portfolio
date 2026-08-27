@@ -1,0 +1,79 @@
+<div class="education-editor">
+  <div class="header-row">
+    <h1>Education</h1>
+    <button class="add-btn" (click)="openAddForm()">+ Add Education</button>
+  </div>
+
+  @if (isLoading()) {
+    <p>Loading...</p>
+  } @else if (entries().length === 0) {
+    <p class="empty-state">No education entries yet.</p>
+  } @else {
+    <div class="entry-list">
+      @for (entry of entries(); track entry.id; let i = $index) {
+        <div class="entry-card">
+          <div class="entry-content">
+            <h3>{{ entry.institution }}</h3>
+            <p class="entry-subtitle">
+              {{ entry.degree }}{{ entry.fieldOfStudy ? ' in ' + entry.fieldOfStudy : '' }}
+            </p>
+            <p class="entry-dates">
+              {{ entry.startDate | slice: 0:10 }} —
+              {{ entry.endDate ? (entry.endDate | slice: 0:10) : 'Present' }}
+            </p>
+            @if (entry.description) {
+              <p class="entry-description">{{ entry.description }}</p>
+            }
+          </div>
+
+          <div class="entry-actions">
+            <button class="icon-btn" (click)="moveUp(i)" [disabled]="i === 0">↑</button>
+            <button class="icon-btn" (click)="moveDown(i)" [disabled]="i === entries().length - 1">↓</button>
+            <button class="icon-btn" (click)="openEditForm(entry)">Edit</button>
+            <button class="icon-btn delete" (click)="onDelete(entry.id)">Delete</button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (showForm()) {
+    <div class="modal-backdrop" (click)="cancelForm()">
+      <form class="modal-form" [formGroup]="form" (ngSubmit)="onSubmit()" (click)="$event.stopPropagation()">
+        <h2>{{ editingId() ? 'Edit' : 'Add' }} Education</h2>
+
+        <label>Institution</label>
+        <input formControlName="institution" />
+
+        <label>Degree</label>
+        <input formControlName="degree" placeholder="e.g. Bachelor's" />
+
+        <label>Field of Study</label>
+        <input formControlName="fieldOfStudy" placeholder="e.g. Computer Science" />
+
+        <label>Start Date</label>
+        <input type="date" formControlName="startDate" />
+
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="isPresent" />
+          I currently study here
+        </label>
+
+        @if (!form.get('isPresent')?.value) {
+          <label>End Date</label>
+          <input type="date" formControlName="endDate" />
+        }
+
+        <label>Description</label>
+        <textarea formControlName="description" rows="3"></textarea>
+
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" (click)="cancelForm()">Cancel</button>
+          <button type="submit" [disabled]="isSaving()">
+            {{ isSaving() ? 'Saving...' : 'Save' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+</div>

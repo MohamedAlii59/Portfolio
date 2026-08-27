@@ -1,0 +1,146 @@
+.profile-editor {
+  max-width: 600px;
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+}
+
+.photo-section {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.photo-preview {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.photo-placeholder {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.upload-btn {
+  padding: 0.55rem 1rem;
+  background: #eaf0fb;
+  color: #2e5aac;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.upload-btn.small {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+}
+
+input,
+textarea {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.slug-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.slug-row input {
+  flex: 1;
+}
+
+.field-error {
+  color: #d33;
+  font-size: 0.8rem;
+}
+
+.save-success {
+  background: #e6f4ea;
+  color: #1e7a34;
+  padding: 0.6rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.save-error {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 0.6rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+button[type='submit'] {
+  margin-top: 1.25rem;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 8px;
+  background: #2e5aac;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button[type='submit']:disabled {
+  opacity: 0.6;
+}
+
+.resume-section {
+  margin-top: 2rem;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.resume-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.delete-btn {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #f0c4c0;
+  background: white;
+  color: #b3261e;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}

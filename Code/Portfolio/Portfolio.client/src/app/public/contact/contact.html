@@ -1,0 +1,64 @@
+@if (isLoading()) {
+  <div class="loading-page">Loading...</div>
+} @else if (notFound()) {
+  <div class="not-found-page">
+    <h1>Page not found</h1>
+  </div>
+} @else {
+  <div class="contact-page">
+    <button class="back-link" (click)="goBack()">← Back to portfolio</button>
+
+    <h1>Get in Touch</h1>
+    <p class="subtitle">Feel free to reach out through any of the channels below.</p>
+
+    <div class="contact-list">
+      <a class="contact-card" [href]="'mailto:' + profile()!.email">
+        <span class="icon">✉️</span>
+        <div>
+          <span class="label">Email</span>
+          <span class="value">{{ profile()!.email }}</span>
+        </div>
+      </a>
+
+      @if (profile()?.phoneNumber) {
+        <a class="contact-card" [href]="'tel:' + profile()!.phoneNumber">
+          <span class="icon">📞</span>
+          <div>
+            <span class="label">Phone</span>
+            <span class="value">{{ profile()!.phoneNumber }}</span>
+          </div>
+        </a>
+      }
+
+      @if (profile()?.githubUrl) {
+        <a class="contact-card" [href]="profile()!.githubUrl" target="_blank">
+          <span class="icon">💻</span>
+          <div>
+            <span class="label">GitHub</span>
+            <span class="value">{{ profile()!.githubUrl }}</span>
+          </div>
+        </a>
+      }
+
+      @if (profile()?.linkedInUrl) {
+        <a class="contact-card" [href]="profile()!.linkedInUrl" target="_blank">
+          <span class="icon">🔗</span>
+          <div>
+            <span class="label">LinkedIn</span>
+            <span class="value">{{ profile()!.linkedInUrl }}</span>
+          </div>
+        </a>
+      }
+
+      @if (resumeDownloadUrl) {
+        <a class="contact-card" [href]="resumeDownloadUrl">
+          <span class="icon">📄</span>
+          <div>
+            <span class="label">Resume</span>
+            <span class="value">Download PDF</span>
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+}

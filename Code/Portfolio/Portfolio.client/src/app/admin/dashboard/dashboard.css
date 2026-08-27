@@ -1,0 +1,62 @@
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f6fa;
+}
+
+.sidebar {
+  width: 220px;
+  background: white;
+  border-right: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+nav a {
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  color: #333;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+nav a.active {
+  background: #eaf0fb;
+  color: #2e5aac;
+  font-weight: 600;
+}
+
+.view-site {
+  font-size: 0.8rem;
+  color: #2e5aac;
+  text-decoration: none;
+  margin-bottom: 0.75rem;
+}
+
+.logout {
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.content {
+  flex: 1;
+  padding: 2rem;
+}

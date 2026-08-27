@@ -1,0 +1,73 @@
+<div class="experience-editor">
+  <div class="header-row">
+    <h1>Work Experience</h1>
+    <button class="add-btn" (click)="openAddForm()">+ Add Experience</button>
+  </div>
+
+  @if (isLoading()) {
+    <p>Loading...</p>
+  } @else if (entries().length === 0) {
+    <p class="empty-state">No work experience yet.</p>
+  } @else {
+    <div class="entry-list">
+      @for (entry of entries(); track entry.id; let i = $index) {
+        <div class="entry-card">
+          <div class="entry-content">
+            <h3>{{ entry.role }} — {{ entry.company }}</h3>
+            <p class="entry-dates">
+              {{ entry.startDate | slice: 0:10 }} —
+              {{ entry.endDate ? (entry.endDate | slice: 0:10) : 'Present' }}
+            </p>
+            @if (entry.description) {
+              <p class="entry-description">{{ entry.description }}</p>
+            }
+          </div>
+
+          <div class="entry-actions">
+            <button class="icon-btn" (click)="moveUp(i)" [disabled]="i === 0">↑</button>
+            <button class="icon-btn" (click)="moveDown(i)" [disabled]="i === entries().length - 1">↓</button>
+            <button class="icon-btn" (click)="openEditForm(entry)">Edit</button>
+            <button class="icon-btn delete" (click)="onDelete(entry.id)">Delete</button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (showForm()) {
+    <div class="modal-backdrop" (click)="cancelForm()">
+      <form class="modal-form" [formGroup]="form" (ngSubmit)="onSubmit()" (click)="$event.stopPropagation()">
+        <h2>{{ editingId() ? 'Edit' : 'Add' }} Experience</h2>
+
+        <label>Company</label>
+        <input formControlName="company" />
+
+        <label>Role</label>
+        <input formControlName="role" />
+
+        <label>Start Date</label>
+        <input type="date" formControlName="startDate" />
+
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="isPresent" />
+          I currently work here
+        </label>
+
+        @if (!form.get('isPresent')?.value) {
+          <label>End Date</label>
+          <input type="date" formControlName="endDate" />
+        }
+
+        <label>Description</label>
+        <textarea formControlName="description" rows="3"></textarea>
+
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" (click)="cancelForm()">Cancel</button>
+          <button type="submit" [disabled]="isSaving()">
+            {{ isSaving() ? 'Saving...' : 'Save' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+</div>

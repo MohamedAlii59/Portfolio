@@ -1,0 +1,27 @@
+<div class="login-page">
+  <form class="login-card" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h1>Sign In</h1>
+
+    <label for="email">Email</label>
+    <input id="email" type="email" formControlName="email" autocomplete="username" />
+    @if (form.get('email')?.touched && form.get('email')?.invalid) {
+      <span class="field-error">Enter a valid email.</span>
+    }
+
+    <label for="password">Password</label>
+    <input id="password" type="password" formControlName="password" autocomplete="current-password" />
+    @if (form.get('password')?.touched && form.get('password')?.invalid) {
+      <span class="field-error">Password is required.</span>
+    }
+
+    @if (errorMessage()) {
+      <div class="form-error">{{ errorMessage() }}</div>
+    }
+
+    <button type="submit" [disabled]="isSubmitting()">
+      {{ isSubmitting() ? 'Signing in...' : 'Sign In' }}
+    </button>
+
+    <a routerLink="/admin/forgot-password" class="forgot-link">Forgot password?</a>
+  </form>
+</div>

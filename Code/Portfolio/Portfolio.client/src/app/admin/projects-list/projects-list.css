@@ -1,0 +1,93 @@
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.add-btn {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #2e5aac;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.empty-state {
+  color: #888;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.project-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.thumb {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  background: #eee;
+}
+
+.thumb.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 0.8rem;
+}
+
+.card-body {
+  padding: 1rem;
+  flex: 1;
+}
+
+.card-body h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1rem;
+}
+
+.card-body p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #eee;
+}
+
+.icon-btn {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.icon-btn.delete {
+  color: #b3261e;
+  border-color: #f0c4c0;
+  margin-left: auto;
+}
+
+.icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

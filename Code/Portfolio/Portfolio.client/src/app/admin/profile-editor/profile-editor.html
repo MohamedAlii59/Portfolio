@@ -1,0 +1,80 @@
+@if (isLoading()) {
+  <p>Loading profile...</p>
+} @else {
+  <div class="profile-editor">
+    <h1>Profile</h1>
+
+    <!-- Photo -->
+    <section class="photo-section">
+      @if (profile()?.profileImageUrl) {
+        <img [src]="profile()!.profileImageUrl" alt="Profile photo" class="photo-preview" />
+      } @else {
+        <div class="photo-placeholder">No photo</div>
+      }
+
+      <label class="upload-btn">
+        {{ isUploadingPhoto() ? 'Uploading...' : 'Change Photo' }}
+        <input type="file" accept="image/*" (change)="onPhotoSelected($event)" hidden />
+      </label>
+    </section>
+
+    <!-- Profile form -->
+    <form [formGroup]="form" (ngSubmit)="onSave()">
+      <label for="fullName">Full Name</label>
+      <input id="fullName" formControlName="fullName" />
+
+      <label for="bio">Bio</label>
+      <textarea id="bio" formControlName="bio" rows="4"></textarea>
+
+      <label for="phoneNumber">Phone Number</label>
+      <input id="phoneNumber" formControlName="phoneNumber" />
+
+      <label for="githubUrl">GitHub URL</label>
+      <input id="githubUrl" formControlName="githubUrl" />
+
+      <label for="linkedInUrl">LinkedIn URL</label>
+      <input id="linkedInUrl" formControlName="linkedInUrl" />
+
+      <label for="slug">Public URL</label>
+      <div class="slug-row">
+        <span>yoursite.com/u/</span>
+        <input id="slug" formControlName="slug" />
+      </div>
+      @if (form.get('slug')?.touched && form.get('slug')?.invalid) {
+        <span class="field-error">Lowercase letters, numbers, and hyphens only.</span>
+      }
+
+      @if (saveMessage()) {
+        <div class="save-success">{{ saveMessage() }}</div>
+      }
+      @if (saveError()) {
+        <div class="save-error">{{ saveError() }}</div>
+      }
+
+      <button type="submit" [disabled]="isSaving()">
+        {{ isSaving() ? 'Saving...' : 'Save Changes' }}
+      </button>
+    </form>
+
+    <!-- Resume -->
+    <section class="resume-section">
+      <h2>Resume</h2>
+
+      @if (profile()?.hasResume) {
+        <div class="resume-row">
+          <span>{{ profile()!.resumeFileName }}</span>
+          <label class="upload-btn small">
+            Replace
+            <input type="file" accept="application/pdf" (change)="onResumeSelected($event)" hidden />
+          </label>
+          <button type="button" class="delete-btn" (click)="onDeleteResume()">Delete</button>
+        </div>
+      } @else {
+        <label class="upload-btn">
+          {{ isUploadingResume() ? 'Uploading...' : 'Upload Resume (PDF)' }}
+          <input type="file" accept="application/pdf" (change)="onResumeSelected($event)" hidden />
+        </label>
+      }
+    </section>
+  </div>
+}

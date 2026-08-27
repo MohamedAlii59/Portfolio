@@ -1,0 +1,67 @@
+@if (isLoading()) {
+  <div class="loading-page">Loading...</div>
+} @else if (notFound()) {
+  <div class="not-found-page">
+    <h1>Project not found</h1>
+  </div>
+} @else {
+  <div class="project-detail">
+    <button class="back-link" (click)="goBack()">← Back to portfolio</button>
+
+    <h1>{{ project()!.title }}</h1>
+    @if (project()!.projectDate) {
+      <p class="date">{{ project()!.projectDate | slice: 0:10 }}</p>
+    }
+
+    @if (project()!.images.length > 0) {
+      <div class="gallery">
+        <img [src]="project()!.images[activeImageIndex()].imageUrl" alt="Project image" class="main-image" />
+
+        @if (project()!.images.length > 1) {
+          <div class="thumbnail-row">
+            @for (image of project()!.images; track image.id; let i = $index) {
+              <img
+                [src]="image.imageUrl"
+                [class.active]="i === activeImageIndex()"
+                (click)="setActiveImage(i)"
+                alt="Thumbnail"
+              />
+            }
+          </div>
+        }
+      </div>
+    }
+
+    @if (project()!.description) {
+      <p class="description">{{ project()!.description }}</p>
+    }
+
+    @if (project()!.technologies.length > 0) {
+      <div class="tech-row">
+        @for (tech of project()!.technologies; track tech.id) {
+          <span class="tech-badge">
+            @if (tech.iconUrl) {
+              <img [src]="tech.iconUrl" [alt]="tech.name" />
+            }
+            {{ tech.name }}
+          </span>
+        }
+      </div>
+    }
+
+    @if (embedUrl) {
+      <div class="video-wrapper">
+        <iframe [src]="embedUrl" frameborder="0" allowfullscreen></iframe>
+      </div>
+    }
+
+    <div class="links-row">
+      @if (project()!.githubUrl) {
+        <a [href]="project()!.githubUrl" target="_blank" class="link-btn">GitHub</a>
+      }
+      @if (project()!.projectUrl) {
+        <a [href]="project()!.projectUrl" target="_blank" class="link-btn primary">View Live Project</a>
+      }
+    </div>
+  </div>
+}
