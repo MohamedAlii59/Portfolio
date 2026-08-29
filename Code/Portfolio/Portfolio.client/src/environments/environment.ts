@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:5109/api',
+  production: true,
+  apiUrl: 'http://yousef-portfolio.runasp.net/api',
   ownerSlug: 'yousef-ashour',
 };

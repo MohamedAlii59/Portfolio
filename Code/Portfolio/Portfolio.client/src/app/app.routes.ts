@@ -12,7 +12,7 @@ import { Home } from './public/home/home';
 import { ProjectDetail } from './public/project-detail/project-detail';
 import { Contact } from './public/contact/contact';
 import { authGuard } from './core/guards/auth.guard';
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.prod';
 import { AllProjects } from './public/all-projects/all-projects';
 import { ForgotPassword } from './admin/forgot-password/forgot-password';
 import { ResetPassword } from './admin/reset-password/reset-password';

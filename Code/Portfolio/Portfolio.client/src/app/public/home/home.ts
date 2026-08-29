@@ -12,7 +12,7 @@ import { EducationEntry } from '../../core/models/education.models';
 import { WorkExperienceEntry } from '../../core/models/experience.models';
 import { Technology } from '../../core/models/technology.models';
 import { Project } from '../../core/models/project.models';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 import { RevealDirective } from '../../core/directives/reveal.directive';
 
 const FEATURED_PROJECT_COUNT = 3;

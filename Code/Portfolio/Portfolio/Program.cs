@@ -71,7 +71,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins(frontendUrl)
+        policy.WithOrigins(frontendUrl, builder.Configuration["Frontend:DeployUrl"])
               .AllowAnyHeader()
               .AllowAnyMethod();
     });

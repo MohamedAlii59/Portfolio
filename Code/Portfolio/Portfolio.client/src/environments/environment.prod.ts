@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-render-api-url.onrender.com/api',
+  apiUrl: 'http://yousef-portfolio.runasp.net/api',
   ownerSlug: 'yousef-ashour',
 };
