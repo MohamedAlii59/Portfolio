@@ -85,7 +85,7 @@ var app = builder.Build();
 
 
 // Redirect root to Swagger UI in Development
-if (app.Environment.IsDevelopment() app.Environment.EnvironmentName == "Staging")
+if (app.Environment.IsDevelopment() ||app.Environment.EnvironmentName == "Staging")
 {
     app.UseSwagger();
     app.UseSwaggerUI();

@@ -1,0 +1,20 @@
+# Stage 1: Build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+COPY Portfolio.csproj ./
+RUN dotnet restore
+
+COPY . .
+RUN dotnet publish -c Release -o /app/out
+
+# Stage 2: Run
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/out .
+
+# Render sets PORT at runtime; Program.cs already reads it via
+# Environment.GetEnvironmentVariable("PORT")
+EXPOSE 8080
+
+ENTRYPOINT ["dotnet", "Portfolio.dll"]
