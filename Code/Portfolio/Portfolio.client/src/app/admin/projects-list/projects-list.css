@@ -1,93 +1,201 @@
-.header-row {
+.projects-list {
+  max-width: 1100px;
+}
+
+.page-header {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.page-header h1 {
+  font-size: 1.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.subtitle {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin: 0;
+  max-width: 500px;
 }
 
 .add-btn {
-  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1.4rem;
   border: none;
-  border-radius: 8px;
-  background: #2e5aac;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
   color: white;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  white-space: nowrap;
+  transition: background 180ms ease;
+}
+
+.add-btn:hover {
+  background: var(--color-accent-hover);
 }
 
 .empty-state {
-  color: #888;
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--color-muted);
 }
 
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1.25rem;
+.empty-state .add-btn {
+  margin: 1rem auto 0;
 }
 
-.project-card {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
+.project-rows {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 }
 
-.thumb {
-  width: 100%;
-  height: 150px;
+.project-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: box-shadow 180ms ease;
+}
+
+.project-row:hover {
+  box-shadow: var(--shadow-card);
+}
+
+.reorder-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.reorder-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--color-muted);
+  font-size: 0.7rem;
+  padding: 0.2rem;
+}
+
+.reorder-btn:hover:not(:disabled) {
+  color: var(--color-accent);
+}
+
+.reorder-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.row-thumb {
+  width: 110px;
+  height: 78px;
   object-fit: cover;
-  background: #eee;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
 }
 
-.thumb.placeholder {
+.row-thumb.placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999;
-  font-size: 0.8rem;
+  background: var(--color-card-blue);
+  color: var(--color-muted);
+  font-size: 0.75rem;
 }
 
-.card-body {
-  padding: 1rem;
+.row-body {
   flex: 1;
+  min-width: 0;
 }
 
-.card-body h3 {
-  margin: 0 0 0.3rem;
-  font-size: 1rem;
+.row-body h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
 }
 
-.card-body p {
-  margin: 0;
-  font-size: 0.8rem;
-  color: #666;
+.row-body p {
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  margin: 0 0 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.card-actions {
+.row-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.row-actions {
   display: flex;
   gap: 0.4rem;
-  padding: 0.75rem 1rem;
-  border-top: 1px solid #eee;
+  flex-shrink: 0;
 }
 
 .icon-btn {
-  padding: 0.35rem 0.55rem;
-  border: 1px solid #ddd;
-  background: white;
-  border-radius: 6px;
-  font-size: 0.75rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--color-card-blue);
+  border-radius: var(--radius-sm);
   cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 180ms ease;
 }
 
-.icon-btn.delete {
-  color: #b3261e;
-  border-color: #f0c4c0;
-  margin-left: auto;
+.icon-btn:hover {
+  background: #dfe7ec;
 }
 
-.icon-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+.icon-btn.danger:hover {
+  background: #fdecea;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+  }
+
+  .add-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .project-row {
+    flex-wrap: wrap;
+    padding: 1rem;
+  }
+
+  .reorder-controls {
+    flex-direction: row;
+    order: 4;
+  }
+
+  .row-thumb {
+    width: 90px;
+    height: 64px;
+  }
+
+  .row-body p {
+    white-space: normal;
+  }
+
+  .row-actions {
+    order: 3;
+  }
 }

@@ -21,7 +21,7 @@ export class ProjectEditor implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  projectId = signal<number | null>(null); // null = creating new
+  projectId = signal<number | null>(null);
   isLoading = signal(true);
   isSaving = signal(false);
   saveError = signal<string | null>(null);
@@ -117,8 +117,6 @@ export class ProjectEditor implements OnInit {
       next: (project) => {
         this.isSaving.set(false);
         if (!id) {
-          // Just created — switch into "edit" mode on this same page so
-          // image upload (which needs a real project Id) becomes available.
           this.projectId.set(project.id);
           this.router.navigate(['/admin/projects', project.id], { replaceUrl: true });
         }
@@ -132,7 +130,7 @@ export class ProjectEditor implements OnInit {
 
   onImagesSelected(event: Event): void {
     const id = this.projectId();
-    if (!id) return; // shouldn't happen — upload UI only shows once a project exists
+    if (!id) return;
 
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;

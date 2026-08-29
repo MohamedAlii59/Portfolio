@@ -5,16 +5,32 @@
     <h1>Project not found</h1>
   </div>
 } @else {
-  <div class="project-detail">
-    <button class="back-link" (click)="goBack()">← Back to portfolio</button>
+  <nav class="public-nav">
+    <a [routerLink]="['/u', slug()]" class="logo">Mohamed Ali</a>
+    <div class="nav-links">
+      <a [routerLink]="['/u', slug()]">Home</a>
+      <a [routerLink]="['/u', slug(), 'projects']" class="active">Projects</a>
+      <a [routerLink]="['/u', slug(), 'contact']">Contact</a>
+    </div>
+  </nav>
 
-    <h1>{{ project()!.title }}</h1>
-    @if (project()!.projectDate) {
-      <p class="date">{{ project()!.projectDate | slice: 0:10 }}</p>
-    }
+  <div class="project-detail-page">
+    <a [routerLink]="['/u', slug(), 'projects']" class="back-link">← Back to Projects</a>
+
+    <header class="detail-header" appReveal>
+      <div>
+        <h1>{{ project()!.title }}</h1>
+        @if (project()!.shortDescription) {
+          <p class="subtitle">{{ project()!.shortDescription }}</p>
+        }
+      </div>
+      @if (project()!.projectDate) {
+        <span class="year-badge">{{ project()!.projectDate | date: 'y' }}</span>
+      }
+    </header>
 
     @if (project()!.images.length > 0) {
-      <div class="gallery">
+      <div class="gallery" appReveal>
         <img [src]="project()!.images[activeImageIndex()].imageUrl" alt="Project image" class="main-image" />
 
         @if (project()!.images.length > 1) {
@@ -32,36 +48,55 @@
       </div>
     }
 
-    @if (project()!.description) {
-      <p class="description">{{ project()!.description }}</p>
-    }
+    <div class="detail-grid">
+      <div class="detail-main">
+        @if (project()!.description) {
+          <section class="overview-card" appReveal>
+            <h2>Project Overview</h2>
+            <p class="description">{{ project()!.description }}</p>
+          </section>
+        }
 
-    @if (project()!.technologies.length > 0) {
-      <div class="tech-row">
-        @for (tech of project()!.technologies; track tech.id) {
-          <span class="tech-badge">
-            @if (tech.iconUrl) {
-              <img [src]="tech.iconUrl" [alt]="tech.name" />
-            }
-            {{ tech.name }}
-          </span>
+        @if (embedUrl) {
+          <section class="video-card" appReveal>
+            <h2>Demo</h2>
+            <div class="video-wrapper">
+              <iframe [src]="embedUrl" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </section>
         }
       </div>
-    }
 
-    @if (embedUrl) {
-      <div class="video-wrapper">
-        <iframe [src]="embedUrl" frameborder="0" allowfullscreen></iframe>
-      </div>
-    }
+      <aside class="detail-sidebar" appReveal>
+        <div class="sidebar-card">
+          <h2>Actions</h2>
+          @if (project()!.projectUrl) {
+            <a [href]="project()!.projectUrl" target="_blank" class="btn-primary full-width">↗ View Live Project</a>
+          }
+          @if (project()!.githubUrl) {
+            <a [href]="project()!.githubUrl" target="_blank" class="btn-outline full-width">&lt;&gt; GitHub Repository</a>
+          }
+        </div>
 
-    <div class="links-row">
-      @if (project()!.githubUrl) {
-        <a [href]="project()!.githubUrl" target="_blank" class="link-btn">GitHub</a>
-      }
-      @if (project()!.projectUrl) {
-        <a [href]="project()!.projectUrl" target="_blank" class="link-btn primary">View Live Project</a>
-      }
+        @if (project()!.technologies.length > 0) {
+          <div class="sidebar-card">
+            <h2>Technologies</h2>
+            <div class="tech-tags">
+              @for (tech of project()!.technologies; track tech.id) {
+                <span class="tag-chip">{{ tech.name }}</span>
+              }
+            </div>
+          </div>
+        }
+      </aside>
     </div>
   </div>
+
+  <footer class="public-footer">
+    <span class="footer-logo">Mohamed Ali</span>
+    <span class="copyright">© Mohamed Ali. Built with Precision.</span>
+    <div class="footer-links">
+      <a [routerLink]="['/u', slug()]">Home</a>
+    </div>
+  </footer>
 }

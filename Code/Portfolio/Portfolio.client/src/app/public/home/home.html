@@ -6,37 +6,88 @@
     <p>This page doesn't exist.</p>
   </div>
 } @else {
-  <div class="public-site">
-    <!-- Hero -->
+  <nav class="public-nav">
+  <a [routerLink]="['/u', profile()!.slug]" class="logo">{{ profile()?.fullName }}</a>
+
+  <div class="nav-links">
+    <a [routerLink]="['/u', profile()!.slug]" [class.active]="true">Home</a>
+    <a [routerLink]="['/u', profile()!.slug, 'projects']">Projects</a>
+    <a [routerLink]="['/u', profile()!.slug, 'contact']">Contact</a>
+  </div>
+</nav>
+
+  <div class="home-page">
     <header class="hero">
+      <div class="hero-text">
+        <h1>{{ profile()?.fullName }}</h1>
+
+        @if (profile()?.title) {
+          <p class="title-tag">{{ profile()!.title }}</p>
+        }
+
+        @if (profile()?.bio) {
+          <p class="bio">{{ profile()!.bio }}</p>
+        }
+
+        <div class="hero-actions">
+          @if (resumeDownloadUrl) {
+            <a [href]="resumeDownloadUrl" class="btn-primary">⬇ Download Resume</a>
+          }
+          <a [routerLink]="['/u', profile()!.slug, 'projects']" class="btn-outline">See Projects</a>
+        </div>
+      </div>
+
       @if (profile()?.profileImageUrl) {
         <img [src]="profile()!.profileImageUrl" [alt]="profile()!.fullName" class="hero-photo" />
       }
-      <h1>{{ profile()?.fullName }}</h1>
-      @if (profile()?.bio) {
-        <p class="bio">{{ profile()!.bio }}</p>
-      }
-
-      <div class="contact-row">
-        @if (profile()?.phoneNumber) {
-          <a [href]="'tel:' + profile()!.phoneNumber">📞 {{ profile()!.phoneNumber }}</a>
-        }
-        @if (profile()?.githubUrl) {
-          <a [href]="profile()!.githubUrl" target="_blank">GitHub</a>
-        }
-        @if (profile()?.linkedInUrl) {
-          <a [href]="profile()!.linkedInUrl" target="_blank">LinkedIn</a>
-        }
-        @if (resumeDownloadUrl) {
-          <a [href]="resumeDownloadUrl" class="resume-btn">Download Resume</a>
-        }
-        <a [routerLink]="['/u', profile()!.slug, 'contact']" class="contact-link">Contact Me →</a>
-      </div>
     </header>
 
-    <!-- Technologies -->
+    <section class="two-col-section" appReveal>
+      @if (experience().length > 0) {
+        <div class="info-card">
+          <h2>💼 Experience</h2>
+          <div class="timeline">
+            @for (exp of experience(); track exp.id; let first = $first) {
+              <div class="timeline-item">
+                <span class="timeline-dot" [class.dot-active]="first"></span>
+                <h3>{{ exp.role }}</h3>
+                <p class="timeline-meta">
+                  {{ exp.company }} | {{ exp.startDate | slice: 0:4 }} –
+                  {{ exp.endDate ? (exp.endDate | slice: 0:4) : 'Present' }}
+                </p>
+                @if (exp.description) {
+                  <p class="timeline-desc">{{ exp.description }}</p>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      @if (education().length > 0) {
+        <div class="info-card">
+          <h2>🎓 Education</h2>
+          <div class="timeline">
+            @for (edu of education(); track edu.id; let first = $first) {
+              <div class="timeline-item">
+                <span class="timeline-dot" [class.dot-active]="first"></span>
+                <h3>{{ edu.institution }}</h3>
+                <p class="timeline-meta">
+                  {{ edu.degree }}{{ edu.fieldOfStudy ? ' in ' + edu.fieldOfStudy : '' }} |
+                  {{ edu.startDate | slice: 0:4 }} – {{ edu.endDate ? (edu.endDate | slice: 0:4) : 'Present' }}
+                </p>
+                @if (edu.description) {
+                  <p class="timeline-desc">{{ edu.description }}</p>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </section>
+
     @if (technologies().length > 0) {
-      <section class="section">
+      <section class="skills-section" appReveal>
         <h2>Skills</h2>
         <div class="tech-grid">
           @for (tech of technologies(); track tech.id) {
@@ -51,61 +102,24 @@
       </section>
     }
 
-    <!-- Work Experience -->
-    @if (experience().length > 0) {
-      <section class="section">
-        <h2>Work Experience</h2>
-        <div class="timeline">
-          @for (exp of experience(); track exp.id) {
-            <div class="timeline-item">
-              <h3>{{ exp.role }} — {{ exp.company }}</h3>
-              <p class="timeline-dates">
-                {{ exp.startDate | slice: 0:10 }} — {{ exp.endDate ? (exp.endDate | slice: 0:10) : 'Present' }}
-              </p>
-              @if (exp.description) {
-                <p>{{ exp.description }}</p>
-              }
-            </div>
-          }
+    @if (featuredProjects().length > 0) {
+      <section class="projects-section" appReveal>
+        <div class="projects-header">
+          <h2>Featured Projects</h2>
+          <a [routerLink]="['/u', profile()!.slug, 'projects']" class="see-all-link">See All Projects →</a>
         </div>
-      </section>
-    }
 
-    <!-- Education -->
-    @if (education().length > 0) {
-      <section class="section">
-        <h2>Education</h2>
-        <div class="timeline">
-          @for (edu of education(); track edu.id) {
-            <div class="timeline-item">
-              <h3>{{ edu.institution }}</h3>
-              <p class="timeline-subtitle">
-                {{ edu.degree }}{{ edu.fieldOfStudy ? ' in ' + edu.fieldOfStudy : '' }}
-              </p>
-              <p class="timeline-dates">
-                {{ edu.startDate | slice: 0:10 }} — {{ edu.endDate ? (edu.endDate | slice: 0:10) : 'Present' }}
-              </p>
-            </div>
-          }
-        </div>
-      </section>
-    }
-
-    <!-- Projects -->
-    @if (projects().length > 0) {
-      <section class="section">
-        <h2>Projects</h2>
         <div class="project-grid">
-          @for (project of projects(); track project.id) {
+          @for (project of featuredProjects(); track project.id) {
             <div class="project-card" (click)="goToProject(project.id)">
               @if (project.images.length > 0) {
                 <img [src]="project.images[0].imageUrl" [alt]="project.title" class="project-thumb" />
               }
               <div class="project-card-body">
-                <h3>{{ project.title }}</h3>
                 @if (project.projectDate) {
-                  <p class="project-date">{{ project.projectDate | slice: 0:10 }}</p>
+                  <p class="project-date">{{ project.projectDate | date: 'MMM y' }}</p>
                 }
+                <h3>{{ project.title }}</h3>
                 @if (project.shortDescription) {
                   <p class="project-short-desc">{{ project.shortDescription }}</p>
                 }
@@ -116,9 +130,23 @@
       </section>
     }
 
-    <!-- Footer -->
-    <footer class="footer">
-      <a [routerLink]="['/u', profile()!.slug, 'contact']">Get in touch →</a>
-    </footer>
+    <section class="contact-cta" appReveal>
+      <h2>Interested in working together?</h2>
+      <p>Available for freelance opportunities and full-time roles.</p>
+      <a [routerLink]="['/u', profile()!.slug, 'contact']" class="btn-primary large">Contact Me</a>
+    </section>
   </div>
+
+  <footer class="public-footer">
+    <span class="footer-logo">{{ profile()?.fullName }}</span>
+    <span class="copyright">© {{ currentYear }} {{ profile()?.fullName }}. Built with Precision.</span>
+    <div class="footer-links">
+      @if (profile()?.linkedInUrl) {
+        <a [href]="profile()!.linkedInUrl" target="_blank">LinkedIn</a>
+      }
+      @if (profile()?.githubUrl) {
+        <a [href]="profile()!.githubUrl" target="_blank">GitHub</a>
+      }
+    </div>
+  </footer>
 }

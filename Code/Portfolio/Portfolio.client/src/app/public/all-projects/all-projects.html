@@ -1,0 +1,63 @@
+@if (isLoading()) {
+  <div class="loading-page">Loading...</div>
+} @else if (notFound()) {
+  <div class="not-found-page">
+    <h1>Portfolio not found</h1>
+  </div>
+} @else {
+  <nav class="public-nav">
+  <a [routerLink]="['/u', profile()!.slug]" class="logo">{{ profile()?.fullName }}</a>
+
+  <div class="nav-links">
+    <a [routerLink]="['/u', profile()!.slug]">Home</a>
+    <a [routerLink]="['/u', profile()!.slug, 'projects']" class="active">Projects</a>
+    <a [routerLink]="['/u', profile()!.slug, 'contact']">Contact</a>
+  </div>
+</nav>
+
+  <div class="all-projects-page">
+    <header class="page-header" appReveal>
+      <h1>Selected Works</h1>
+      <p>A collection of projects focused on performance, scalability, and elegant user interfaces.</p>
+    </header>
+
+    @if (projects().length === 0) {
+      <p class="empty-state">No projects to show yet.</p>
+    } @else {
+      <div class="project-grid" appReveal>
+        @for (project of projects(); track project.id) {
+          <div class="project-card" (click)="goToProject(project.id)">
+            @if (project.images.length > 0) {
+              <img [src]="project.images[0].imageUrl" [alt]="project.title" class="project-thumb" />
+            }
+            <div class="project-card-body">
+              <div class="project-card-top">
+                <h3>{{ project.title }}</h3>
+                @if (project.projectDate) {
+                  <span class="project-date">{{ project.projectDate | date: 'y' }}</span>
+                }
+              </div>
+              @if (project.shortDescription) {
+                <p class="project-short-desc">{{ project.shortDescription }}</p>
+              }
+              <span class="view-link">View Project →</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <footer class="public-footer">
+    <span class="footer-logo">{{ profile()?.fullName }}</span>
+    <span class="copyright">© {{ profile()?.fullName }}. Built with Precision.</span>
+    <div class="footer-links">
+      @if (profile()?.linkedInUrl) {
+        <a [href]="profile()!.linkedInUrl" target="_blank">LinkedIn</a>
+      }
+      @if (profile()?.githubUrl) {
+        <a [href]="profile()!.githubUrl" target="_blank">GitHub</a>
+      }
+    </div>
+  </footer>
+}

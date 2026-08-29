@@ -21,8 +21,13 @@ export class Login {
     password: ['', [Validators.required]],
   });
 
+  showPassword = signal(false);
   isSubmitting = signal(false);
   errorMessage = signal<string | null>(null);
+
+  togglePasswordVisibility(): void {
+    this.showPassword.set(!this.showPassword());
+  }
 
   onSubmit(): void {
     if (this.form.invalid) {
@@ -42,15 +47,13 @@ export class Login {
         if (response.mustChangePassword) {
           this.router.navigate(['/admin/change-password']);
         } else {
-         this.router.navigate(['/admin']);
+          this.router.navigate(['/admin']);
         }
       },
       error: (err) => {
         this.isSubmitting.set(false);
         this.errorMessage.set(
-          err.status === 401
-            ? 'Incorrect email or password.'
-            : 'Something went wrong. Please try again.'
+          err.status === 401 ? 'Incorrect email or password.' : 'Something went wrong. Please try again.'
         );
       },
     });

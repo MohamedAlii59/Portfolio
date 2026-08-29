@@ -1,117 +1,183 @@
-.header-row {
+.tech-manager {
+  max-width: 900px;
+}
+
+.page-header {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.page-header h1 {
+  font-size: 1.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.subtitle {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin: 0;
 }
 
 .add-btn {
-  padding: 0.6rem 1rem;
+  padding: 0.75rem 1.4rem;
   border: none;
-  border-radius: 8px;
-  background: #2e5aac;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
   color: white;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  white-space: nowrap;
+  transition: background 180ms ease;
 }
 
-.add-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  background: white;
-  padding: 1.25rem;
-  border-radius: 12px;
+.add-btn:hover {
+  background: var(--color-accent-hover);
+}
+
+.card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
   margin-bottom: 1.5rem;
-  max-width: 360px;
 }
 
-.add-form label {
+.add-form-card h2 {
+  font-size: 1.1rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-items: end;
+}
+
+.form-field label {
+  display: block;
   font-size: 0.85rem;
   font-weight: 600;
-  margin-top: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
-.add-form input[type='text'],
-.add-form input:not([type]) {
-  padding: 0.6rem 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 0.95rem;
+.form-field input {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: none;
+  background: #f0f2f5;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  box-sizing: border-box;
 }
 
 .icon-upload-label {
-  padding: 0.55rem 0.75rem;
-  background: #f0f2f7;
-  border-radius: 8px;
+  display: block;
+  padding: 0.7rem 0.85rem;
+  background: #f0f2f5;
+  border-radius: var(--radius-sm);
   font-size: 0.85rem;
   cursor: pointer;
   text-align: center;
+  color: var(--color-ink-soft);
 }
 
-.form-error {
+.toast-error {
   background: #fdecea;
   color: #b3261e;
-  padding: 0.5rem;
-  border-radius: 8px;
-  font-size: 0.8rem;
-}
-
-.add-form button[type='submit'] {
-  margin-top: 0.5rem;
   padding: 0.6rem;
-  border: none;
-  border-radius: 8px;
-  background: #2e5aac;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  margin: 1rem 0 0;
 }
 
-.hint {
-  color: #888;
-  font-size: 0.85rem;
-  margin-bottom: 1rem;
+.save-btn {
+  margin-top: 1.25rem;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 180ms ease;
+}
+
+.save-btn:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+.save-btn:disabled {
+  opacity: 0.6;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: var(--color-muted);
 }
 
 .tech-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.75rem;
 }
 
 .tech-chip {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 0.9rem;
-  border: 1px solid #ddd;
-  border-radius: 999px;
+  padding: 0.6rem 0.6rem 0.6rem 1rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-full);
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   background: white;
   position: relative;
+  transition: background 180ms ease, border-color 180ms ease;
 }
 
 .tech-chip.selected {
-  background: #eaf0fb;
-  border-color: #2e5aac;
-  color: #2e5aac;
+  background: var(--color-accent-light);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
   font-weight: 600;
 }
 
 .tech-chip img {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
 }
 
 .delete-icon {
   border: none;
   background: transparent;
-  color: #b3261e;
-  font-size: 1rem;
+  color: var(--color-muted);
+  font-size: 1.1rem;
   cursor: pointer;
   line-height: 1;
-  padding: 0 0.2rem;
+  padding: 0.1rem 0.3rem;
+  border-radius: 50%;
+}
+
+.delete-icon:hover {
+  background: #fdecea;
+  color: #b3261e;
+}
+
+@media (max-width: 700px) {
+  .page-header {
+    flex-direction: column;
+  }
+
+  .add-btn {
+    width: 100%;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
 }

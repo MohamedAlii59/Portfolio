@@ -29,6 +29,7 @@ namespace Portfolio.Services.Implementations
                 Token = _tokenService.GenerateToken(user),
                 MustChangePassword = user.MustChangePasswordOnFirstLogin,
                 FullName = user.FullName,
+                Title = user.Title,
                 Slug = user.Slug,
             };
         }

@@ -6,9 +6,14 @@ using Portfolio.Data;
 using Portfolio.Mapping;
 using Portfolio.Services.Implementations;
 using Portfolio.Services.Interfaces;
+using PortfolioApi.Services.Implementations;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 
 // --- Database ---
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -28,7 +33,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IEmailService, SmtpEmailService>();
-builder.Services.AddScoped<IFileStorageService, R2FileStorageService>();
+builder.Services.AddScoped<IFileStorageService, SupabaseFileStorageService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IEducationService, EducationService>();
@@ -78,12 +83,13 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
 
 // Redirect root to Swagger UI in Development
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() app.Environment.EnvironmentName == "Staging")
 {
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
     app.MapGet("/", context => 
     {
         context.Response.Redirect("/swagger/index.html", permanent: false);
@@ -100,16 +106,6 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
-
-    // Run once, then delete this line:
-    DbSeeder.SeedInitialUser(
-        db,
-        fullName: "Mohamed Ali",
-        email: "medoali4974@gmail.com",
-        slug: "mohamed-ali",
-        initialPassword: "Mo@Ali4974!Xk",
-        phoneNumber: "01144995699"
-    );
 }
 
 app.Run();

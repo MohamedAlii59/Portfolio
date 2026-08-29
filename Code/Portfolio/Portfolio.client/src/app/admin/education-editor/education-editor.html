@@ -1,36 +1,40 @@
-<div class="education-editor">
-  <div class="header-row">
-    <h1>Education</h1>
+<div class="entry-editor">
+  <div class="page-header">
+    <div>
+      <h1>Education</h1>
+      <p class="subtitle">Add, edit, or reorder your education history.</p>
+    </div>
     <button class="add-btn" (click)="openAddForm()">+ Add Education</button>
   </div>
 
   @if (isLoading()) {
     <p>Loading...</p>
   } @else if (entries().length === 0) {
-    <p class="empty-state">No education entries yet.</p>
+    <div class="empty-state">
+      <p>No education entries yet.</p>
+    </div>
   } @else {
-    <div class="entry-list">
+    <div class="entry-rows">
       @for (entry of entries(); track entry.id; let i = $index) {
-        <div class="entry-card">
-          <div class="entry-content">
-            <h3>{{ entry.institution }}</h3>
-            <p class="entry-subtitle">
-              {{ entry.degree }}{{ entry.fieldOfStudy ? ' in ' + entry.fieldOfStudy : '' }}
-            </p>
-            <p class="entry-dates">
-              {{ entry.startDate | slice: 0:10 }} —
-              {{ entry.endDate ? (entry.endDate | slice: 0:10) : 'Present' }}
-            </p>
-            @if (entry.description) {
-              <p class="entry-description">{{ entry.description }}</p>
-            }
+        <div class="entry-row">
+          <div class="reorder-controls">
+            <button class="reorder-btn" (click)="moveUp(i)" [disabled]="i === 0">▲</button>
+            <button class="reorder-btn" (click)="moveDown(i)" [disabled]="i === entries().length - 1">▼</button>
           </div>
 
-          <div class="entry-actions">
-            <button class="icon-btn" (click)="moveUp(i)" [disabled]="i === 0">↑</button>
-            <button class="icon-btn" (click)="moveDown(i)" [disabled]="i === entries().length - 1">↓</button>
-            <button class="icon-btn" (click)="openEditForm(entry)">Edit</button>
-            <button class="icon-btn delete" (click)="onDelete(entry.id)">Delete</button>
+          <div class="row-body">
+            <h3>{{ entry.institution }}</h3>
+            <p class="row-subtitle">
+              {{ entry.degree }}{{ entry.fieldOfStudy ? ' in ' + entry.fieldOfStudy : '' }}
+            </p>
+            <p class="row-dates">
+              {{ entry.startDate | slice: 0:4 }} — {{ entry.endDate ? (entry.endDate | slice: 0:4) : 'Present' }}
+            </p>
+          </div>
+
+          <div class="row-actions">
+            <button class="icon-btn" (click)="openEditForm(entry)" title="Edit">✏️</button>
+            <button class="icon-btn danger" (click)="onDelete(entry.id)" title="Delete">🗑️</button>
           </div>
         </div>
       }
@@ -42,34 +46,46 @@
       <form class="modal-form" [formGroup]="form" (ngSubmit)="onSubmit()" (click)="$event.stopPropagation()">
         <h2>{{ editingId() ? 'Edit' : 'Add' }} Education</h2>
 
-        <label>Institution</label>
-        <input formControlName="institution" />
+        <div class="form-field">
+          <label>Institution</label>
+          <input formControlName="institution" />
+        </div>
 
-        <label>Degree</label>
-        <input formControlName="degree" placeholder="e.g. Bachelor's" />
+        <div class="form-row">
+          <div class="form-field">
+            <label>Degree</label>
+            <input formControlName="degree" placeholder="e.g. Bachelor's" />
+          </div>
+          <div class="form-field">
+            <label>Field of Study</label>
+            <input formControlName="fieldOfStudy" placeholder="e.g. Computer Science" />
+          </div>
+        </div>
 
-        <label>Field of Study</label>
-        <input formControlName="fieldOfStudy" placeholder="e.g. Computer Science" />
-
-        <label>Start Date</label>
-        <input type="date" formControlName="startDate" />
+        <div class="form-row">
+          <div class="form-field">
+            <label>Start Date</label>
+            <input type="date" formControlName="startDate" />
+          </div>
+          <div class="form-field">
+            <label>End Date</label>
+            <input type="date" formControlName="endDate" [disabled]="isPresentChecked" />
+          </div>
+        </div>
 
         <label class="checkbox-label">
           <input type="checkbox" formControlName="isPresent" />
           I currently study here
         </label>
 
-        @if (!form.get('isPresent')?.value) {
-          <label>End Date</label>
-          <input type="date" formControlName="endDate" />
-        }
-
-        <label>Description</label>
-        <textarea formControlName="description" rows="3"></textarea>
+        <div class="form-field">
+          <label>Description</label>
+          <textarea formControlName="description" rows="3"></textarea>
+        </div>
 
         <div class="modal-actions">
           <button type="button" class="cancel-btn" (click)="cancelForm()">Cancel</button>
-          <button type="submit" [disabled]="isSaving()">
+          <button type="submit" class="save-btn" [disabled]="isSaving()">
             {{ isSaving() ? 'Saving...' : 'Save' }}
           </button>
         </div>

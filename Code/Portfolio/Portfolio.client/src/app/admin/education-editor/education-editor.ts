@@ -18,7 +18,7 @@ export class EducationEditor implements OnInit {
   entries = signal<EducationEntry[]>([]);
   isLoading = signal(true);
   isSaving = signal(false);
-  editingId = signal<number | null>(null); // null = "add new" mode
+  editingId = signal<number | null>(null);
   showForm = signal(false);
 
   form = this.fb.group({
@@ -31,6 +31,9 @@ export class EducationEditor implements OnInit {
     description: [''],
   });
 
+  get isPresentChecked(): boolean {
+    return !!this.form.get('isPresent')?.value;
+  }
   ngOnInit(): void {
     this.loadEntries();
   }

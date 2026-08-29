@@ -10,6 +10,7 @@ namespace Portfolio.DTOs
         public int Id { get; set; }
         public string FullName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
         public string Slug { get; set; } = string.Empty;
         public string? Bio { get; set; }
         public string? ProfileImageUrl { get; set; }
@@ -27,6 +28,9 @@ namespace Portfolio.DTOs
     {
         [Required, MaxLength(150)]
         public string FullName { get; set; } = string.Empty;
+
+        [MaxLength(150)]
+        public string? Title { get; set; }
 
         [MaxLength(2000)]
         public string? Bio { get; set; }

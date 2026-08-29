@@ -1,34 +1,61 @@
 <div class="project-editor">
-  <button class="back-btn" (click)="goBack()">← Back to Projects</button>
+  <button class="back-link" (click)="goBack()">← Back to Projects</button>
 
   @if (isLoading()) {
     <p>Loading...</p>
   } @else {
-    <h1>{{ projectId() ? 'Edit Project' : 'New Project' }}</h1>
+    <div class="page-header">
+      <h1>{{ projectId() ? 'Edit Project' : 'New Project' }}</h1>
+      <button class="save-btn" (click)="onSubmit()" [disabled]="isSaving()">
+        💾 {{ isSaving() ? 'Saving...' : (projectId() ? 'Save Changes' : 'Create Project') }}
+      </button>
+    </div>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <label>Title</label>
-      <input formControlName="title" />
+    @if (saveError()) {
+      <div class="toast-error">{{ saveError() }}</div>
+    }
 
-      <label>Short Description <span class="hint">(shown on the project card)</span></label>
-      <input formControlName="shortDescription" />
+    <div class="card" [formGroup]="form">
+      <h2>Project Details</h2>
 
-      <label>Full Description</label>
-      <textarea formControlName="description" rows="5"></textarea>
+      <div class="form-field">
+        <label>Title</label>
+        <input formControlName="title" />
+      </div>
 
-      <label>Project Date</label>
-      <input type="date" formControlName="projectDate" />
+      <div class="form-row">
+        <div class="form-field">
+          <label>Short Description <span class="hint-inline">(shown on cards)</span></label>
+          <input formControlName="shortDescription" />
+        </div>
+        <div class="form-field">
+          <label>Project Date</label>
+          <input type="date" formControlName="projectDate" />
+        </div>
+      </div>
 
-      <label>Demo Video Link <span class="hint">(YouTube / Vimeo)</span></label>
-      <input formControlName="demoVideoUrl" placeholder="https://youtube.com/watch?v=..." />
+      <div class="form-field">
+        <label>Full Description</label>
+        <textarea formControlName="description" rows="5"></textarea>
+      </div>
 
-      <label>GitHub Repository Link</label>
-      <input formControlName="githubUrl" placeholder="https://github.com/..." />
+      <h2 class="section-heading">Links</h2>
+      <div class="form-row">
+        <div class="form-field">
+          <label>Demo Video <span class="hint-inline">(YouTube / Vimeo)</span></label>
+          <input formControlName="demoVideoUrl" placeholder="https://youtube.com/watch?v=..." />
+        </div>
+        <div class="form-field">
+          <label>GitHub Repository</label>
+          <input formControlName="githubUrl" placeholder="https://github.com/..." />
+        </div>
+      </div>
+      <div class="form-field">
+        <label>Live Project URL</label>
+        <input formControlName="projectUrl" placeholder="https://..." />
+      </div>
 
-      <label>Live Project Link</label>
-      <input formControlName="projectUrl" placeholder="https://..." />
-
-      <label>Technologies Used</label>
+      <h2 class="section-heading">Technologies</h2>
       <div class="tech-picker">
         @for (tech of allTechnologies(); track tech.id) {
           <div class="tech-chip" [class.selected]="isTechSelected(tech.id)" (click)="toggleTech(tech.id)">
@@ -39,24 +66,17 @@
           </div>
         }
       </div>
-
-      @if (saveError()) {
-        <div class="form-error">{{ saveError() }}</div>
-      }
-
-      <button type="submit" [disabled]="isSaving()">
-        {{ isSaving() ? 'Saving...' : (projectId() ? 'Save Changes' : 'Create Project') }}
-      </button>
-    </form>
+    </div>
 
     @if (projectId()) {
-      <section class="images-section">
-        <h2>Project Images</h2>
-
-        <label class="upload-btn">
-          {{ isUploadingImages() ? 'Uploading...' : '+ Add Images' }}
-          <input type="file" accept="image/*" multiple (change)="onImagesSelected($event)" hidden />
-        </label>
+      <div class="card images-card">
+        <div class="images-header">
+          <h2>Project Images</h2>
+          <label class="upload-btn">
+            {{ isUploadingImages() ? 'Uploading...' : '+ Add Images' }}
+            <input type="file" accept="image/*" multiple (change)="onImagesSelected($event)" hidden />
+          </label>
+        </div>
 
         @if (images().length > 0) {
           <div class="image-grid">
@@ -72,11 +92,13 @@
             }
           </div>
         } @else {
-          <p class="hint">No images yet.</p>
+          <p class="hint">No images uploaded yet.</p>
         }
-      </section>
+      </div>
     } @else {
-      <p class="hint save-first-hint">Save the project first to start uploading images.</p>
+      <div class="card save-first-notice">
+        <p>Save the project first to start uploading images.</p>
+      </div>
     }
   }
 </div>

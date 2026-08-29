@@ -27,7 +27,7 @@ namespace Portfolio.Services.Implementations
         public async Task<List<TechnologyDto>> GetAllAsync()
         {
             var technologies = await _db.Technologies.OrderBy(t => t.Name).ToListAsync();
-            return _mapper.Map<List<TechnologyDto>>(technologies);
+            return technologies.Select(MapWithResolvedUrl).ToList();
         }
 
         public async Task<TechnologyDto> CreateAsync(CreateTechnologyDto dto, IFormFile? icon)
@@ -42,7 +42,26 @@ namespace Portfolio.Services.Implementations
             _db.Technologies.Add(entity);
             await _db.SaveChangesAsync();
 
-            return _mapper.Map<TechnologyDto>(entity);
+            return MapWithResolvedUrl(entity);
+        }
+
+        public async Task<List<TechnologyDto>> GetProfileTechnologiesAsync(int userId)
+        {
+            var technologies = await _db.UserTechnologies
+                .IgnoreQueryFilters()
+                .Where(ut => ut.UserId == userId)
+                .Select(ut => ut.Technology!)
+                .ToListAsync();
+
+            return technologies.Select(MapWithResolvedUrl).ToList();
+        }
+
+        // --- Private helper: single place where entity -> DTO + URL resolution happens ---
+        private TechnologyDto MapWithResolvedUrl(Technology tech)
+        {
+            var dto = _mapper.Map<TechnologyDto>(tech);
+            dto.IconUrl = _fileStorage.GetPublicUrl(tech.IconUrl);
+            return dto;
         }
 
         public async Task DeleteAsync(int technologyId)
@@ -87,17 +106,6 @@ namespace Portfolio.Services.Implementations
 
             _db.UserTechnologies.Remove(link);
             await _db.SaveChangesAsync();
-        }
-
-        public async Task<List<TechnologyDto>> GetProfileTechnologiesAsync(int userId)
-        {
-            var technologies = await _db.UserTechnologies
-                .IgnoreQueryFilters()
-                .Where(ut => ut.UserId == userId)
-                .Select(ut => ut.Technology!)
-                .ToListAsync();
-
-            return _mapper.Map<List<TechnologyDto>>(technologies);
         }
     }
 }

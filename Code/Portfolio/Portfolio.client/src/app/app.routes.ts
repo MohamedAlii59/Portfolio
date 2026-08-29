@@ -13,10 +13,15 @@ import { ProjectDetail } from './public/project-detail/project-detail';
 import { Contact } from './public/contact/contact';
 import { authGuard } from './core/guards/auth.guard';
 import { environment } from '../environments/environment';
+import { AllProjects } from './public/all-projects/all-projects';
+import { ForgotPassword } from './admin/forgot-password/forgot-password';
+import { ResetPassword } from './admin/reset-password/reset-password';
 
 export const routes: Routes = [
   // --- Admin (intentionally not linked from anywhere public) ---
   { path: 'admin/login', component: Login },
+  { path: 'admin/forgot-password', component: ForgotPassword },
+  { path: 'admin/reset-password', component: ResetPassword },
   { path: 'admin/change-password', component: ChangePassword, canActivate: [authGuard] },
   {
     path: 'admin',
@@ -36,6 +41,7 @@ export const routes: Routes = [
 
   // --- Public ---
   { path: 'u/:slug', component: Home },
+  { path: 'u/:slug/projects', component: AllProjects },
   { path: 'u/:slug/contact', component: Contact },
   { path: 'u/:slug/projects/:projectId', component: ProjectDetail },
 

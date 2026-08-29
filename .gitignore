@@ -1,44 +1,41 @@
-# Ignore all bin and obj folders
-bin/
-obj/
-
-# Ignore Visual Studio specific files
-.vs/
-.vscode/
+## =========================================================================
+## .NET / Backend (Portfolio)
+## =========================================================================
+Portfolio/bin/
+Portfolio/obj/
+**/bin/
+**/obj/
 *.user
-*.userprefs
-*.sln.iml
+.vs/
+appsettings.Development.json
+appsettings.Local.json
+appsettings.Production.json
+
+## =========================================================================
+## Angular / Frontend (Portfolio.Client)
+## =========================================================================
+Portfolio.Client/node_modules/
+Portfolio.Client/dist/
+Portfolio.Client/.angular/
+Portfolio.Client/.angular/cache/
+Portfolio.Client/npm-debug.log
+Portfolio.Client/yarn-error.log
+Portfolio.Client/.env
+
+## Angular environment files with real secrets/URLs, if you choose to gitignore them
+## (leave commented out unless you specifically want prod config kept out of Git)
+# Portfolio.Client/src/environments/environment.prod.ts
+
+## =========================================================================
+## Editors / OS
+## =========================================================================
+.vscode/
 .idea/
-
-# Ignore appsettings files (usually contain sensitive data)
-appsettings*.json
-!appsettings.json.example
-
-# Ignore NuGet packages
-*.nupkg
-*.snupkg
-packages/
-.nuget/
-
-# Ignore build results
-*.dll
-*.exe
-*.pdb
-
-# Ignore dependency folders
-node_modules/
-dist/
-
-# Ignore OS files
 .DS_Store
 Thumbs.db
 
-# Ignore IDE cache
-.idea/
-*.suo
-*.sln.iml
-
-# Local environment files
-.env
-.env.local
+## =========================================================================
+## Misc
+## =========================================================================
 *.log
+*.tmp

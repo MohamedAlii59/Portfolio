@@ -6,6 +6,7 @@
 
         public string FullName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
 
         // Public portfolio URL segment, e.g. yoursite.com/u/{Slug}

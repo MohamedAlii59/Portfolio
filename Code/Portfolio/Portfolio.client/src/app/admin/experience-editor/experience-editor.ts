@@ -30,6 +30,10 @@ export class ExperienceEditor implements OnInit {
     description: [''],
   });
 
+  get isPresentChecked(): boolean {
+    return !!this.form.get('isPresent')?.value;
+  }
+
   ngOnInit(): void {
     this.loadEntries();
   }

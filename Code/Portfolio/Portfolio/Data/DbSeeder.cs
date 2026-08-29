@@ -8,7 +8,7 @@ namespace Portfolio.Data
     // account, then remove the call to it — it should not run on every app start.
     public static class DbSeeder
     {
-        public static void SeedInitialUser(AppDbContext db, string fullName, string email, string slug, string initialPassword, string phoneNumber)
+        public static void SeedInitialUser(AppDbContext db, string fullName, string email, string slug, string initialPassword, string phoneNumber, string title)
         {
             if (db.Users.IgnoreQueryFilters().Any(u => u.Email == email))
             {
@@ -23,7 +23,8 @@ namespace Portfolio.Data
                 Slug = slug,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(initialPassword),
                 PhoneNumber = phoneNumber,
-                MustChangePasswordOnFirstLogin = false,
+                Title = title,
+                MustChangePasswordOnFirstLogin = true,
                 CreatedAt = DateTime.UtcNow,
             };
 

@@ -5,13 +5,22 @@
     <h1>Page not found</h1>
   </div>
 } @else {
+  <nav class="public-nav">
+  <a [routerLink]="['/u', profile()!.slug]" class="logo">{{ profile()?.fullName }}</a>
+  <div class="nav-links">
+    <a [routerLink]="['/u', profile()!.slug]">Home</a>
+    <a [routerLink]="['/u', profile()!.slug, 'projects']">Projects</a>
+    <a [routerLink]="['/u', profile()!.slug, 'contact']" class="active">Contact</a>
+  </div>
+</nav>
+
   <div class="contact-page">
-    <button class="back-link" (click)="goBack()">← Back to portfolio</button>
+    <div class="contact-intro" appReveal>
+      <h1>Get in Touch</h1>
+      <p>Available for freelance opportunities and full-time roles.</p>
+    </div>
 
-    <h1>Get in Touch</h1>
-    <p class="subtitle">Feel free to reach out through any of the channels below.</p>
-
-    <div class="contact-list">
+    <div class="contact-list" appReveal>
       <a class="contact-card" [href]="'mailto:' + profile()!.email">
         <span class="icon">✉️</span>
         <div>
@@ -32,7 +41,7 @@
 
       @if (profile()?.githubUrl) {
         <a class="contact-card" [href]="profile()!.githubUrl" target="_blank">
-          <span class="icon">💻</span>
+          <span class="icon">&lt;&gt;</span>
           <div>
             <span class="label">GitHub</span>
             <span class="value">{{ profile()!.githubUrl }}</span>
@@ -42,7 +51,7 @@
 
       @if (profile()?.linkedInUrl) {
         <a class="contact-card" [href]="profile()!.linkedInUrl" target="_blank">
-          <span class="icon">🔗</span>
+          <span class="icon">💼</span>
           <div>
             <span class="label">LinkedIn</span>
             <span class="value">{{ profile()!.linkedInUrl }}</span>
@@ -55,10 +64,23 @@
           <span class="icon">📄</span>
           <div>
             <span class="label">Resume</span>
-            <span class="value">Download PDF</span>
+            <span class="value">PDF Download</span>
           </div>
         </a>
       }
     </div>
   </div>
+
+  <footer class="public-footer">
+    <span class="footer-logo">{{ profile()?.fullName }}</span>
+    <span class="copyright">© {{ profile()?.fullName }}. Built with Precision.</span>
+    <div class="footer-links">
+      @if (profile()?.linkedInUrl) {
+        <a [href]="profile()!.linkedInUrl" target="_blank">LinkedIn</a>
+      }
+      @if (profile()?.githubUrl) {
+        <a [href]="profile()!.githubUrl" target="_blank">GitHub</a>
+      }
+    </div>
+  </footer>
 }

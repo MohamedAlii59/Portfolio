@@ -1,17 +1,37 @@
 <div class="dashboard">
   <aside class="sidebar">
-    <div class="brand">{{ fullName }}</div>
+    <div class="sidebar-top">
+      @if (profilePhotoUrl()) {
+        <img [src]="profilePhotoUrl()" alt="Profile" class="avatar" />
+      } @else {
+        <div class="avatar avatar-placeholder">{{ fullName?.charAt(0) }}</div>
+      }
+      <div class="user-name">{{ fullName }}</div>
+      <div class="user-role">Software Engineer</div>
+    </div>
 
     <nav>
-      <a routerLink="profile" routerLinkActive="active">Profile</a>
-      <a routerLink="projects" routerLinkActive="active">Projects</a>
-      <a routerLink="education" routerLinkActive="active">Education</a>
-      <a routerLink="experience" routerLinkActive="active">Experience</a>
-      <a routerLink="technologies" routerLinkActive="active">Technologies</a>
+      <a routerLink="profile" routerLinkActive="active">
+        <span class="nav-icon">👤</span> Profile
+      </a>
+      <a routerLink="projects" routerLinkActive="active">
+        <span class="nav-icon">📁</span> Projects
+      </a>
+      <a routerLink="education" routerLinkActive="active">
+        <span class="nav-icon">🎓</span> Education
+      </a>
+      <a routerLink="experience" routerLinkActive="active">
+        <span class="nav-icon">💼</span> Experience
+      </a>
+      <a routerLink="technologies" routerLinkActive="active">
+        <span class="nav-icon">🧩</span> Technologies
+      </a>
     </nav>
 
-    <a class="view-site" [href]="'/u/' + slug" target="_blank">View my public site ↗</a>
-    <button class="logout" (click)="logout()">Log Out</button>
+    <div class="sidebar-bottom">
+      <a class="view-site-btn" [href]="'/u/' + slug" target="_blank">View public site</a>
+      <button class="logout-btn" (click)="logout()">↩ Log Out</button>
+    </div>
   </aside>
 
   <main class="content">

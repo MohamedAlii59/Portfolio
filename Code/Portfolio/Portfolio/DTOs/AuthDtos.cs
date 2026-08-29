@@ -16,6 +16,7 @@ namespace Portfolio.DTOs
         public string Token { get; set; } = string.Empty;
         public bool MustChangePassword { get; set; }
         public string FullName { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
         public string Slug { get; set; } = string.Empty;
     }
 

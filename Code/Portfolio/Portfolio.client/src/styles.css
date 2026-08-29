@@ -1,1 +1,55 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-cream: #faf3ea;
+  --color-accent: #c0451f;
+  --color-accent-hover: #a6391a;
+  --color-accent-light: #fbeae3;
+  --color-ink: #1a1a1a;
+  --color-ink-soft: #4a4a4a;
+  --color-muted: #6b7280;
+  --color-card-blue: #edf2f5;
+  --color-white: #ffffff;
+  --color-border: #e5e0d8;
+  --color-footer-bg: #e8eef2;
+
+  --font-display: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --radius-sm: 8px;
+  --radius-lg: 20px;
+  --radius-full: 999px;
+
+  --shadow-card: 0 2px 14px rgba(26, 26, 26, 0.06);
+  --shadow-card-hover: 0 12px 28px rgba(26, 26, 26, 0.12);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin: 0;
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1), transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+}

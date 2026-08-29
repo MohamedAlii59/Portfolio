@@ -3,6 +3,7 @@ export interface ProfileResponse {
   fullName: string;
   email: string;
   slug: string;
+  title: string | null;
   bio: string | null;
   profileImageUrl: string | null;
   phoneNumber: string | null;
@@ -14,6 +15,7 @@ export interface ProfileResponse {
 
 export interface UpdateProfileRequest {
   fullName: string;
+  title: string | null;
   bio: string | null;
   phoneNumber: string | null;
   githubUrl: string | null;

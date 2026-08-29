@@ -26,11 +26,12 @@ export class ProfileEditor implements OnInit {
 
   form = this.fb.group({
     fullName: ['', [Validators.required]],
+    title: [''],
     bio: [''],
     phoneNumber: [''],
     githubUrl: [''],
     linkedInUrl: [''],
-    slug: ['', [Validators.required, Validators.pattern('^[a-z0-9-]+$')]],
+    slug: ['yousef-ashour', [Validators.required, Validators.pattern('^[a-z0-9-]+$')]],
   });
 
   ngOnInit(): void {
@@ -39,11 +40,12 @@ export class ProfileEditor implements OnInit {
         this.profile.set(profile);
         this.form.patchValue({
           fullName: profile.fullName,
+          title: profile.title ?? '',
           bio: profile.bio ?? '',
           phoneNumber: profile.phoneNumber ?? '',
           githubUrl: profile.githubUrl ?? '',
           linkedInUrl: profile.linkedInUrl ?? '',
-          slug: profile.slug,
+          slug: profile.slug || 'yousef-ashour',
         });
         this.isLoading.set(false);
       },
@@ -61,17 +63,27 @@ export class ProfileEditor implements OnInit {
     this.saveMessage.set(null);
     this.saveError.set(null);
 
-    this.profileService.updateProfile(this.form.getRawValue() as any).subscribe({
+    const raw = this.form.getRawValue();
+    const payload = {
+      fullName: raw.fullName!,
+      title: raw.title || null,
+      bio: raw.bio || null,
+      phoneNumber: raw.phoneNumber || null,
+      githubUrl: raw.githubUrl || null,
+      linkedInUrl: raw.linkedInUrl || null,
+      slug: raw.slug!,
+    };
+
+    this.profileService.updateProfile(payload).subscribe({
       next: (updated) => {
         this.profile.set(updated);
         this.isSaving.set(false);
         this.saveMessage.set('Saved successfully.');
+        setTimeout(() => this.saveMessage.set(null), 3000);
       },
       error: (err) => {
         this.isSaving.set(false);
-        this.saveError.set(
-          err.status === 400 ? (err.error?.message ?? 'That URL is already taken.') : 'Something went wrong.'
-        );
+        this.saveError.set(err.error?.message ?? 'Something went wrong. Please check your inputs.');
       },
     });
   }

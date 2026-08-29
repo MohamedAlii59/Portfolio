@@ -1,34 +1,51 @@
 <div class="projects-list">
-  <div class="header-row">
-    <h1>Projects</h1>
+  <div class="page-header">
+    <div>
+      <h1>Manage Projects</h1>
+      <p class="subtitle">Reorder, edit, or remove projects from your portfolio. Use the arrows to reorder.</p>
+    </div>
     <button class="add-btn" (click)="goToNew()">+ Add Project</button>
   </div>
 
   @if (isLoading()) {
     <p>Loading...</p>
   } @else if (projects().length === 0) {
-    <p class="empty-state">No projects yet.</p>
+    <div class="empty-state">
+      <p>No projects yet.</p>
+      <button class="add-btn" (click)="goToNew()">+ Add Your First Project</button>
+    </div>
   } @else {
-    <div class="project-grid">
+    <div class="project-rows">
       @for (project of projects(); track project.id; let i = $index) {
-        <div class="project-card" (click)="goToEdit(project.id)">
+        <div class="project-row" (click)="goToEdit(project.id)">
+          <div class="reorder-controls">
+            <button class="reorder-btn" (click)="moveUp(i, $event)" [disabled]="i === 0">▲</button>
+            <button class="reorder-btn" (click)="moveDown(i, $event)" [disabled]="i === projects().length - 1">▼</button>
+          </div>
+
           @if (project.images.length > 0) {
-            <img [src]="project.images[0].imageUrl" [alt]="project.title" class="thumb" />
+            <img [src]="project.images[0].imageUrl" [alt]="project.title" class="row-thumb" />
           } @else {
-            <div class="thumb placeholder">No image</div>
+            <div class="row-thumb placeholder">No image</div>
           }
 
-          <div class="card-body">
+          <div class="row-body">
             <h3>{{ project.title }}</h3>
             @if (project.shortDescription) {
               <p>{{ project.shortDescription }}</p>
             }
+            @if (project.technologies.length > 0) {
+              <div class="row-tags">
+                @for (tech of project.technologies; track tech.id) {
+                  <span class="tag-chip">{{ tech.name }}</span>
+                }
+              </div>
+            }
           </div>
 
-          <div class="card-actions">
-            <button class="icon-btn" (click)="moveUp(i, $event)" [disabled]="i === 0">↑</button>
-            <button class="icon-btn" (click)="moveDown(i, $event)" [disabled]="i === projects().length - 1">↓</button>
-            <button class="icon-btn delete" (click)="onDelete(project.id, $event)">Delete</button>
+          <div class="row-actions">
+            <button class="icon-btn" (click)="goToEdit(project.id); $event.stopPropagation()" title="Edit">✏️</button>
+            <button class="icon-btn danger" (click)="onDelete(project.id, $event)" title="Delete">🗑️</button>
           </div>
         </div>
       }

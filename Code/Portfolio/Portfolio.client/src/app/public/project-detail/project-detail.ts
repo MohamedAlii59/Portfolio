@@ -1,21 +1,23 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl, Title } from '@angular/platform-browser';
+import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from '../../core/services/profile.service';
 import { ProjectService } from '../../core/services/project.service';
 import { Project } from '../../core/models/project.models';
+import { RevealDirective } from '../../core/directives/reveal.directive';
 
 @Component({
   selector: 'app-project-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink, RevealDirective],
   templateUrl: './project-detail.html',
   styleUrl: './project-detail.css',
 })
 export class ProjectDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private titleService = inject(Title);
   private profileService = inject(ProfileService);
   private projectService = inject(ProjectService);
   private sanitizer = inject(DomSanitizer);
@@ -40,6 +42,7 @@ export class ProjectDetail implements OnInit {
 
     this.profileService.getPublicProfile(slug).subscribe({
       next: (profile) => {
+        this.titleService.setTitle(profile.fullName);
         this.projectService.getPublicById(profile.id, projectId).subscribe({
           next: (project) => {
             this.project.set(project);
@@ -77,9 +80,5 @@ export class ProjectDetail implements OnInit {
     }
 
     return null;
-  }
-
-  goBack(): void {
-    this.router.navigate(['/u', this.slug()]);
   }
 }
